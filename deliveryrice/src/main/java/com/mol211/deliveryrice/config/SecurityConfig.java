@@ -3,6 +3,7 @@ package com.mol211.deliveryrice.config;
 import com.mol211.deliveryrice.auth.jwt.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -28,9 +29,14 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/login","api/v1/auth/register").permitAll()
+                        .requestMatchers("/api/v1/auth/login","/api/v1/auth/register").permitAll()
                         .requestMatchers("/api/v1/users/me").authenticated()
                         .requestMatchers("/api/v1/users/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/api/v1/products/**").authenticated()
+                        .requestMatchers(HttpMethod.POST,"/api/v1/products/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH,"/api/v1/products/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/api/v1/products/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT,"/api/v1/products/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session ->

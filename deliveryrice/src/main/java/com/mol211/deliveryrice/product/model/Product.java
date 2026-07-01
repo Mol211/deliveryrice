@@ -22,7 +22,7 @@ public class Product {
     private String name;
     @Column(nullable = false)
     private String description;
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
     @Column(nullable=false)
     private Integer stock;
@@ -32,8 +32,10 @@ public class Product {
     @Column(nullable = false)
     private Boolean available;
     @CreationTimestamp
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
+    @Column(name="image_url")
+    private String imageUrl;
 
 
 
