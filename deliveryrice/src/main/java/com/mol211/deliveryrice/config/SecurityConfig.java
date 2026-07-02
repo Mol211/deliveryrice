@@ -33,6 +33,10 @@ public class SecurityConfig {
                                 "/api/v1/auth/register"
                         ).permitAll()
 
+                        .requestMatchers("/swagger-ui/**",
+                                    "/swagger-ui.html",
+                                    "/v3/api-docs/**").permitAll()
+
                         .requestMatchers("/api/v1/users/me").authenticated()
                         .requestMatchers("/api/v1/users/**").hasAuthority("ADMIN")
 
