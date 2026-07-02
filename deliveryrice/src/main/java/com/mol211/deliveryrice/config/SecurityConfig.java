@@ -29,14 +29,24 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/login","/api/v1/auth/register").permitAll()
+                        .requestMatchers("/api/v1/auth/login",
+                                "/api/v1/auth/register"
+                        ).permitAll()
+
                         .requestMatchers("/api/v1/users/me").authenticated()
                         .requestMatchers("/api/v1/users/**").hasAuthority("ADMIN")
+
                         .requestMatchers(HttpMethod.GET,"/api/v1/products/**").authenticated()
                         .requestMatchers(HttpMethod.POST,"/api/v1/products/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.PATCH,"/api/v1/products/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE,"/api/v1/products/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.PUT,"/api/v1/products/**").hasAuthority("ADMIN")
+
+                        .requestMatchers(HttpMethod.POST,"/api/v1/orders/**").authenticated()
+                        .requestMatchers("/api/v1/orders/me").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/api/v1/orders/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH,"/api/v1/orders/**").hasAnyAuthority("ADMIN","DELIVER")
+
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session ->
