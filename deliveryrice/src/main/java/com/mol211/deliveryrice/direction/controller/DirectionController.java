@@ -55,6 +55,14 @@ public class DirectionController {
                 directionService.updateDirection(id, request, authentication.getName())
         );
     }
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<Void>deleteDirection(
+//            @PathVariable Long id,
+//            Authentication authentication
+//    ) {
+//        directionService.deleteDirection(id, authentication.getName());
+//        return ResponseEntity.noContent().build();
+//    }
 
 
 

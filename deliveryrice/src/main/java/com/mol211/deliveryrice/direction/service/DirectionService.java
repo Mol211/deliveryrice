@@ -16,4 +16,6 @@ public interface DirectionService {
     DirectionResponse setDefaultDirection(Long id, String name);
 
     DirectionResponse updateDirection(Long id, @Valid DirectionRequest request, String name);
+
+//    void deleteDirection(Long id, String mail);
 }
