@@ -12,6 +12,8 @@ import com.mol211.deliveryrice.user.mapper.UserMapper;
 import com.mol211.deliveryrice.user.model.User;
 import com.mol211.deliveryrice.user.persistence.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,16 +48,19 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public AuthResponse login(LoginRequest request) {
-
-        var authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.mail(),
-                        request.password()
-                )
-        );
-        var userDetails = (UserDetails) authentication.getPrincipal();
-        String token = jwtService.generateToken(userDetails);
-        return new AuthResponse(token);
+        try{
+            var authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.mail(),
+                            request.password()
+                    )
+            );
+            var userDetails = (UserDetails) authentication.getPrincipal();
+            String token = jwtService.generateToken(userDetails);
+            return new AuthResponse(token);
+        } catch(BadCredentialsException | InternalAuthenticationServiceException ex){
+            throw new InvalidCredentialsException("Correo o contraseña incorrectos");
+        }
     }
 
     @Override

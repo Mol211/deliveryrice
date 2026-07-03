@@ -9,7 +9,7 @@ services:
             SPRING_DATASOURCE_URL: jdbc:mysql://deliveryrice-db:3306/deliveryricedb?serverTimezone=UTC
             SPRING_DATASOURCE_USERNAME: deliveryrice_user
             SPRING_DATASOURCE_PASSWORD: deliveryrice_password
-            SPRING_JPA_HIBERNATE_DDL_AUTO: update
+            SPRING_JPA_HIBERNATE_DDL_AUTO: create
             JWT_KEY: ${JWT_KEY}
         restart: always
         depends_on:

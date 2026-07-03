@@ -6,6 +6,7 @@ import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.crypto.SecretKey;
 
@@ -13,7 +14,6 @@ import javax.crypto.SecretKey;
 public class DeliveryriceApplication {
 
 	public static void main(String[] args) {
-
 
 		SpringApplication.run(DeliveryriceApplication.class, args);
 	}
