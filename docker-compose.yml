@@ -1,0 +1,37 @@
+services:
+
+    deliveryrice-api:
+        build: deliveryrice
+        container_name: deliveryrice-api
+        ports:
+            - "8080:8080"
+        environment:
+            SPRING_DATASOURCE_URL: jdbc:mysql://deliveryrice-db:3306/deliveryricedb?serverTimezone=UTC
+            SPRING_DATASOURCE_USERNAME: deliveryrice_user
+            SPRING_DATASOURCE_PASSWORD: deliveryrice_password
+            SPRING_JPA_HIBERNATE_DDL_AUTO: update
+            JWT_KEY: ${JWT_KEY}
+        restart: always
+        depends_on:
+            deliveryrice-db:
+                condition: service_healthy
+    deliveryrice-db:
+        image: mysql:8.0.33
+        container_name: deliveryrice-db
+        ports:
+            - "3307:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: deliveryricedb
+            MYSQL_USER: deliveryrice_user
+            MYSQL_PASSWORD: deliveryrice_password
+        restart: always
+        healthcheck:
+            test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+            timeout: 10s
+            retries: 10
+        volumes:
+            - deliveryrice_mysql_data:/var/lib/mysql
+
+volumes:
+    deliveryrice_mysql_data:
