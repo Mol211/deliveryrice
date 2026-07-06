@@ -170,7 +170,6 @@ El manejo de errores está centralizado mediante un `GlobalExceptionHandler` (co
 
 Además del manejo de excepciones genéricas de Spring (validación, errores de tipo, etc.), el proyecto define excepciones personalizadas para los casos de negocio propios — por ejemplo, para recursos no encontrados o conflictos de datos — de forma que el error devuelto al cliente sea claro y específico en vez de un `500` genérico.
 
-[TU RESPUESTA AQUÍ: si te apetece, nombra aquí 2-3 excepciones personalizadas reales que tengas, ej. `ProductNotFoundException`, `InsufficientStockException`, `UserAlreadyExistsException`]
 
 ## Base de datos
 
@@ -259,9 +258,6 @@ Todavía no hay tests automatizados — es lo siguiente que voy a añadir (unita
 - CI/CD con GitHub Actions
 - Paginación y filtrado en los listados de productos y pedidos
 
-## Capturas
-
-*(Añade aquí 2-3 capturas reales de Swagger UI ejecutándose y, si tienes, un diagrama ER de la base de datos)*
 
 ## Autor
 
