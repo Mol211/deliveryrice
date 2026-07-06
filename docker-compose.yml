@@ -10,7 +10,6 @@ services:
             SPRING_DATASOURCE_USERNAME: deliveryrice_user
             SPRING_DATASOURCE_PASSWORD: deliveryrice_password
             SPRING_JPA_HIBERNATE_DDL_AUTO: create
-            JWT_KEY: ${JWT_KEY}
         restart: always
         depends_on:
             deliveryrice-db:

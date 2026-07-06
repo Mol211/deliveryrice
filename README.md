@@ -170,6 +170,7 @@ El manejo de errores está centralizado mediante un `GlobalExceptionHandler` (co
 
 Además del manejo de excepciones genéricas de Spring (validación, errores de tipo, etc.), el proyecto define excepciones personalizadas para los casos de negocio propios — por ejemplo, para recursos no encontrados o conflictos de datos — de forma que el error devuelto al cliente sea claro y específico en vez de un `500` genérico.
 
+[TU RESPUESTA AQUÍ: si te apetece, nombra aquí 2-3 excepciones personalizadas reales que tengas, ej. `ProductNotFoundException`, `InsufficientStockException`, `UserAlreadyExistsException`]
 
 ## Base de datos
 
@@ -184,9 +185,11 @@ El script `data.sql` crea automáticamente dos usuarios demo para poder probar l
 | ADMIN | `admin@deliveryrice.com` | `Admin1234` |
 | CLIENT | `cliente@deliveryrice.com` | `Admin1234` |
 
-Las contraseñas se almacenan cifradas con BCrypt.
+Las contraseñas se almacenan cifradas con BCrypt. `data.sql` usa `INSERT IGNORE`, así que el script puede ejecutarse varias veces sin provocar errores por claves duplicadas.
 
 También se cargan productos de ejemplo (arroces, entrantes, postres y bebidas) para tener el catálogo poblado desde el primer arranque.
+
+**Nota sobre Docker:** en el contenedor de la API, `SPRING_JPA_HIBERNATE_DDL_AUTO` está configurado como `create`, así que **cada reinicio del contenedor de la API resetea las tablas y las vuelve a poblar con los datos de ejemplo**. Es intencional para que cualquiera que pruebe el proyecto siempre tenga datos limpios y consistentes, pero ten en cuenta que cualquier dato creado manualmente (por ejemplo, un pedido de prueba) no persiste entre reinicios del contenedor de la API.
 
 ## Docker
 
@@ -198,22 +201,51 @@ docker compose up --build
 docker compose down
 ```
 
-Incluye la API de Spring Boot, la base de datos MySQL y un volumen persistente.
+Incluye la API de Spring Boot, la base de datos MySQL y un volumen persistente para los datos de MySQL (aunque, como se explica arriba, el propio contenedor de la API resetea las tablas en cada arranque).
 
 ## Cómo ejecutarlo
 
-**Requisitos:** Java 21, Maven, Docker, Docker Compose
+Hay dos formas de levantar el proyecto. **La recomendada es Docker Compose**, porque no requiere tener nada instalado más allá de Docker: la base de datos se crea y se puebla automáticamente. Ejecutarlo con `mvn spring-boot:run` en local es posible, pero requiere tener tu propio servidor MySQL ya instalado y configurado a mano.
+
+### Opción A — Docker Compose (recomendada)
+
+**Requisitos:** Docker y Docker Compose.
 
 ```bash
-git clone https://github.com/Mol211/deliveryrice.git
+git clone https://github.com/TU_USUARIO/deliveryrice.git
 cd deliveryrice
-
-# Con Docker
 docker compose up --build
-
-# Local
-mvn spring-boot:run
 ```
+
+Con un solo comando se levantan tanto la API como una base de datos MySQL nueva, ya con las tablas creadas y los datos de ejemplo cargados. No necesitas tener MySQL instalado en tu máquina para esta opción, ni configurar ninguna variable de entorno adicional.
+
+### Opción B — Local con Maven (requiere MySQL propio)
+
+`mvn spring-boot:run` **solo arranca la aplicación Java**, no levanta ninguna base de datos. Asume que ya tienes un servidor MySQL corriendo en tu máquina, con la base de datos creada de antemano.
+
+Para ejecutarlo en local sin Docker, necesitas:
+
+1. **Tener MySQL Server instalado y corriendo** en tu máquina (versión 8.x), escuchando en el puerto por defecto `3306`.
+2. **Crear la base de datos manualmente** antes de arrancar la aplicación, conectándote con un cliente MySQL (MySQL Workbench, DBeaver, o la terminal `mysql`):
+   ```sql
+   CREATE DATABASE deliveryricedb;
+   ```
+   No hace falta crear las tablas a mano: Hibernate las genera automáticamente al arrancar (`spring.jpa.hibernate.ddl-auto=update`) y `data.sql` las puebla con los datos de ejemplo.
+3. **Comprobar que el usuario y contraseña coinciden** con lo que espera la aplicación. Por defecto es `root` / `admin123`. Si tu MySQL local usa otras credenciales, sobreescríbelas con variables de entorno en vez de tocar el código:
+   ```powershell
+   $env:SPRING_DATASOURCE_USERNAME="tu_usuario"
+   $env:SPRING_DATASOURCE_PASSWORD="tu_password"
+   ```
+4. **Arrancar:**
+   ```bash
+   git clone https://github.com/TU_USUARIO/deliveryrice.git
+   cd deliveryrice
+   mvn spring-boot:run
+   ```
+
+No hace falta configurar ninguna clave JWT: el proyecto incluye una clave de desarrollo por defecto en el propio código, generada específicamente para esta demo.
+
+**Si el puerto configurado ya está en uso en tu máquina** (algo frecuente en Windows si tienes Docker Desktop/WSL2, que reserva rangos de puertos dinámicamente), cambia `server.port` en `application.properties` a otro valor libre, por ejemplo `9090`.
 
 ## Documentación de la API
 
@@ -258,9 +290,12 @@ Todavía no hay tests automatizados — es lo siguiente que voy a añadir (unita
 - CI/CD con GitHub Actions
 - Paginación y filtrado en los listados de productos y pedidos
 
+## Capturas
+
+*(Añade aquí 2-3 capturas reales de Swagger UI ejecutándose y, si tienes, un diagrama ER de la base de datos)*
 
 ## Autor
 
 Víctor Molins Martínez — Java Backend Developer
 
-[GitHub](https://github.com/Mol211) · [LinkedIn](https://www.linkedin.com/in/victor-molins/)
+[GitHub](https://github.com/TU_USUARIO) · [LinkedIn](https://linkedin.com/in/TU_PERFIL)
