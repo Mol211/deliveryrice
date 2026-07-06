@@ -205,7 +205,7 @@ Incluye la API de Spring Boot, la base de datos MySQL y un volumen persistente.
 **Requisitos:** Java 21, Maven, Docker, Docker Compose
 
 ```bash
-git clone https://github.com/TU_USUARIO/deliveryrice.git
+git clone https://github.com/Mol211/deliveryrice.git
 cd deliveryrice
 
 # Con Docker
