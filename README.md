@@ -267,4 +267,4 @@ Todavía no hay tests automatizados — es lo siguiente que voy a añadir (unita
 
 Víctor Molins Martínez — Java Backend Developer
 
-[GitHub](https://github.com/Mol211) · [LinkedIn](https://linkedin.com/in/victor-molins)
+[GitHub](https://github.com/Mol211) 
