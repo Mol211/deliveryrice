@@ -1,4 +1,4 @@
-package com.mol211.deliveryrice.user.service;
+package com.mol211.deliveryrice.user;
 
 import com.mol211.deliveryrice.user.dto.UpdateUserRequest;
 import com.mol211.deliveryrice.user.dto.UserResponse;

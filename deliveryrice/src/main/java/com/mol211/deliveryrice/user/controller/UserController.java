@@ -2,7 +2,7 @@ package com.mol211.deliveryrice.user.controller;
 
 import com.mol211.deliveryrice.user.dto.UpdateUserRequest;
 import com.mol211.deliveryrice.user.dto.UserResponse;
-import com.mol211.deliveryrice.user.service.UserService;
+import com.mol211.deliveryrice.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

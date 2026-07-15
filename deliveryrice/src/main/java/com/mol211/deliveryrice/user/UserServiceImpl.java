@@ -1,4 +1,4 @@
-package com.mol211.deliveryrice.user.service;
+package com.mol211.deliveryrice.user;
 
 import com.mol211.deliveryrice.exception.NotFoundException;
 import com.mol211.deliveryrice.user.dto.UpdateUserRequest;
